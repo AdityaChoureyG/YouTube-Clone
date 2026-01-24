@@ -4,18 +4,35 @@ import youtubeIcon from '../assets/youtube.png'
 import searchIcon from '../assets/search-line.svg'
 import bellIcon from '../assets/bell.png'
 import userIcon from '../assets/account.png'
+import { useDispatch } from 'react-redux'
+import { toggleMenu } from '../utils/navslice'
+
+const HeaderLeftSide = () => {
+  const dispatch = useDispatch();
+
+  function handleToggle(){
+    dispatch(toggleMenu())
+  }
+
+  return (
+    <div className='flex items-center gap-5'>
+      <button className='rounded-full p-2 hover:bg-gray-200' onClick={()=>handleToggle()}>
+        <img className='h-6 w-6 cursor-pointer'  src={menuIcon} alt="Menu" />
+      </button>        
+      <div className='flex cursor-pointer'>
+        <img className='h-7 w-7'  src={youtubeIcon} alt="Menu" />
+        <h1 className='text-xl font-semibold px-0.5 inline-block transform scale-x-[0.8] scale-y-[1.2] origin-left'>YouTube</h1>
+      </div>
+    </div>
+  );
+}
 
 const Header = () => {
   return (
   <>
-    <div className='font-bold px-6 h-14 flex justify-between  items-center'>
-      <div className='flex items-center gap-6'>
-        <img className='h-6 w-6 cursor-pointer'  src={menuIcon} alt="Menu" />
-        <div className='flex cursor-pointer'>
-          <img className='h-7 w-7'  src={youtubeIcon} alt="Menu" />
-          <h1 className='text-xl font-semibold px-0.5 inline-block transform scale-x-[0.8] scale-y-[1.2] origin-left'>YouTube</h1>
-        </div>
-      </div>
+    <div className='font-bold px-5 h-14 flex justify-between  items-center'>
+      
+      <HeaderLeftSide />
 
       <div className="flex items-center w-full max-w-130 h-7">
         {/* 1. Input Section */}

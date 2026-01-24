@@ -1,10 +1,16 @@
 import Header from "./components/Header";
+import SidebarMenu from "./components/SidebarMenu";
+import store from "./utils/store";
+import { Provider } from "react-redux";
 
 const App = () => {
   return (
-    <div>
-      <Header />
-    </div>
+    <Provider store={store}>
+      <div>
+        <Header />
+        <SidebarMenu />
+      </div>
+    </Provider>
   )
 }
 
