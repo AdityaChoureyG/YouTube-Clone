@@ -9,6 +9,7 @@ import historyIcon from '../assets/history.png'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { toggleMenu } from '../utils/navslice'
+import { HeaderLeftSide } from './Header'
 
 const MenuItem = ({ icon, label }) => (
   <div className='flex items-center gap-7 px-7 py-3 hover:bg-gray-200 cursor-pointer'>
@@ -36,7 +37,7 @@ const SidebarMenu = () => {
             <div className={`fixed top-0 left-0 w-64 h-full bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-in-out ${
                 isMenuOpen ? "translate-x-0" : "-translate-x-full"
                 }`}>
-                <div className='flex items-center gap-5 p-5 h-14'>
+                {/* <div className='flex items-center gap-5 p-5 h-14'>
                     <button className='rounded-full p-2 hover:bg-gray-200' onClick={()=>handleToggle()}>
                         <img className='h-6 w-6 cursor-pointer'  src={menuIcon} alt="Menu" />
                     </button>
@@ -44,7 +45,13 @@ const SidebarMenu = () => {
                         <img className='h-7 w-7'  src={youtubeIcon} alt="Menu" />
                         <h1 className='text-xl font-semibold px-0.5 inline-block transform scale-x-[0.8] scale-y-[1.2] origin-left'>YouTube</h1>
                     </div>
+                </div> */}
+
+                <div className='px-4.5 py-3 h-16 flex items-center'>
+                    <HeaderLeftSide />
                 </div>
+
+                
 
                 <MenuItem icon={homeIcon} label="Home" />
                 <MenuItem icon={exploreIcon} label="Explore" />

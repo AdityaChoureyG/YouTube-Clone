@@ -1,3 +1,4 @@
+import Body from "./components/Body";
 import Header from "./components/Header";
 import SidebarMenu from "./components/SidebarMenu";
 import store from "./utils/store";
@@ -8,7 +9,8 @@ const App = () => {
     <Provider store={store}>
       <div>
         <Header />
-        <SidebarMenu />
+        <Body />
+        {/* <SidebarMenu /> */}
       </div>
     </Provider>
   )
