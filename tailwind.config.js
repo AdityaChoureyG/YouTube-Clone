@@ -11,6 +11,9 @@ export default {
         // The array contains the fallback fonts
         roboto: ['Roboto', 'Arial', 'sans-serif'],
       },
+      screens: {
+        'xs': '528px', // Adds a new 'xs' breakpoint
+      },
     },
   },
   plugins: [],

@@ -1,5 +1,5 @@
 @import "tailwindcss";
 
-.button-container::-webkit-scrollbar {
+.button-container, .suggestion-container::-webkit-scrollbar {
   display: none;
 }

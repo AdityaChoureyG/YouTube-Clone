@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { YOUTUBE_API_URL } from '../constants';
+import { YOUTUBE_API_URL, Search_API_URL } from '../constants';
 import VideoShimmer from './VideoShimmer';
 import calculateTimeStamp from '../utils/timestamp';
 import calculateViewCount from '../utils/calculareViewCount'
@@ -35,11 +35,11 @@ const VideoItem = ({item}) => {
 
                     {/* Text Content */}
                     <div className="flex flex-col">
-                        <h3 className="font-bold text-sm text-gray-900 leading-tight line-clamp-2">
+                        <h3 className="font-bold text-md font-semibold text-gray-900 leading-tight line-clamp-2">
                             {item.snippet.title}
                         </h3>
                         
-                        <div className="mt-1 text-xs text-gray-600">
+                        <div className="mt-1 text-sm text-gray-600">
                             <p className="hover:text-gray-900 transition-colors">{item.snippet.channelTitle}</p>
                             <div className="flex items-center gap-1">
                                 <span>{calculateViewCount(item.statistics.viewCount)} views</span>
@@ -59,7 +59,14 @@ const VideoContainer = () => {
 
     useEffect(()=>{
         getVideos();
+        getSearchResult();
     }, []);
+
+    async function getSearchResult(){
+        const response = await fetch(Search_API_URL);
+        const data = await response.json();
+        console.log("Search Result:", data.items);
+    }
 
     async function getVideos(){
         const response = await fetch(YOUTUBE_API_URL);

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import menuIcon from '../assets/menu-line.svg'
 import youtubeIcon from '../assets/youtube.png'
 import searchIcon from '../assets/search-line.svg'
@@ -7,6 +7,7 @@ import userIcon from '../assets/account.png'
 import { useDispatch } from 'react-redux'
 import { toggleMenu } from '../utils/navslice'
 import SidebarMenu from './SidebarMenu'
+import { Search_API_URL } from '../constants'
 
 export const HeaderLeftSide = () => {
   const dispatch = useDispatch();
@@ -29,21 +30,61 @@ export const HeaderLeftSide = () => {
 }
 
 const HeaderMiddle = () => {
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [suggestionResult, setSuggestionResult] = React.useState([]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      getSearchSuggestion();
+    }, 300);
+
+    return () => {
+      clearTimeout(timer);
+    }
+  }, [searchQuery]);
+
+  async function getSearchSuggestion() {
+    const response = await fetch(Search_API_URL + searchQuery);
+    const data = await response.json();
+    setSuggestionResult(data[1]);
+    console.log(data[1]);
+  }
+
   return (
-    <div className="hidden sm:flex items-center flex-1 md:flex-none md:w-full md:max-w-100 lg:w-full lg:max-w-130 h-7 mx-2">
-      {/* 1. Input Section */}
-      <div className="flex flex-1 items-center bg-white border border-gray-300 rounded-l-full px-3 md:px-4 py-1.5 focus-within:border-blue-800 focus-within:shadow-inner">
-        <input
-          type="text"
-          placeholder="Search"
-          className="w-full font-normal h-7 bg-transparent outline-none text-gray-800 placeholder-gray-500 text-sm md:text-base"
-        />
+    <div className='flex flex-col relative flex-1 md:flex-none md:w-full md:max-w-100 lg:w-full lg:max-w-130 h-7 mx-2'>
+      <div className="flex items-center flex-1 md:flex-none md:w-full md:max-w-100 lg:w-full lg:max-w-130 h-7 mx-2">
+        {/* 1. Input Section */}
+        <div className="sm:px-0 flex flex-1 items-center bg-white border border-gray-300 rounded-l-full px-3 md:px-4 py-1.5 focus-within:border-blue-800 focus-within:shadow-inner">
+          <input
+            type="text"
+            placeholder="Search"
+            className="w-full font-normal h-7 bg-transparent outline-none text-black placeholder-gray-500 text-sm md:text-base"
+            value={searchQuery}
+            onChange={(e)=> setSearchQuery(e.target.value)}
+          />
+        </div>
+
+        {/* 2. Search Button Section */}
+        <button className="cursor-pointer flex items-center justify-center bg-gray-100 border border-l-0 border-gray-300 rounded-r-full px-2 md:px-5 py-2 hover:bg-gray-200 transition-colors">
+          <img className='w-6 h-6 md:w-7 md:h-6' src={searchIcon} alt="Search" />
+        </button>
       </div>
 
-      {/* 2. Search Button Section */}
-      <button className="cursor-pointer flex items-center justify-center bg-gray-100 border border-l-0 border-gray-300 rounded-r-full px-3 md:px-5 py-2 hover:bg-gray-200 transition-colors">
-        <img className='w-6 h-6 md:w-7 md:h-6' src={searchIcon} alt="Search" />
-      </button>
+      {/* search suggestion */}
+      {
+        (suggestionResult.length != 0) &&
+        <ul className='suggestion-container absolute top-10 left-0 right-0 mx-2 p-2 mt-2 border border-gray-300 bg-white rounded-2xl shadow-2xl max-w-full md:max-w-600 z-50 max-h-96 overflow-y-auto'>
+          {
+            suggestionResult.map((item, idx) => {
+              return <li key={idx} className='flex items-center px-4 py-3 hover:bg-gray-100 cursor-pointer transition-colors duration-150 rounded-lg'>
+                <img className='w-4 h-4 mr-3 text-gray-500' src={searchIcon} alt="search" />
+                <span className='font-medium text-black text-sm md:text-base line-clamp-2'>{item}</span>
+              </li>
+            })
+          }
+        </ul>
+      }
+      
     </div>
   )
 };
