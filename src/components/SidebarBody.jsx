@@ -3,6 +3,7 @@
  import accountIcon from '../assets/account.png'
  import subscriptionIcon from '../assets/subscription.png'
  import exploreIcon from '../assets/compass.png'
+import { Link } from 'react-router-dom'
 
 
  const MenuItem = ({ icon, label }) => (
@@ -14,8 +15,8 @@
 
  const SidebarBody = () => {
    return (
-     <div className='fixed left-0 top-16 w-19 px-1 h-[calc(100vh-64px)] bg-white z-20 '>
-        <MenuItem icon={homeIcon} label="Home" />
+     <div className='fixed left-0 top-16 w-20 px-1 h-[calc(100vh-64px)] bg-white z-20 '>
+        <Link to={'/'}><MenuItem icon={homeIcon} label="Home" /></Link>
         <MenuItem icon={exploreIcon} label="Explore" />
         <MenuItem icon={subscriptionIcon} label="Subscriptions" />
         <MenuItem icon={accountIcon} label="You" />

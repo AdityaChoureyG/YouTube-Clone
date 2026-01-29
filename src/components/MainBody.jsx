@@ -1,4 +1,5 @@
 import VideoContainer from "./VideoContainer";
+import VideoShimmer from "./VideoShimmer";
 
 const buttonItems = ['All', 'Music', 'Data Structure', 'Mixes', 'Live', 'System Design', 'Software Engineering', 'Masala films', 'Ghazal', 'News', 'Recently uploaded', 'Media', "Movies", "Cricket", "Tech", "Cooking", "React", "Tailwind"];
 
@@ -12,9 +13,9 @@ const ButtonItem = ({label}) => {
 
 const ButtonContainer = () => {
     return (
-        <div className='w-full overflow-x-auto  h-14 px-5 text-sm gap-4 shrink-0 bg-white flex items-center sticky top-0 z-10 overscroll-x-none button-container'>
+        <div className='w-full overflow-x-auto  h-14 px-5 text-sm gap-4 shrink-0 transition-all duration-300 bg-white/90 backdrop-blur-md flex items-center sticky top-0 z-10 overscroll-x-none button-container'>
             { 
-                buttonItems.map((item, idx) => <ButtonItem label={item} key={idx} />)
+                buttonItems.map((item, idx) => <ButtonItem label={item} key={idx}/>)
             }
         </div>
     )
@@ -24,12 +25,11 @@ const ButtonContainer = () => {
 
 const MainBody = () => {
   return (
-    <div className='w-full  ml-19 overflow-y-auto'>
+    <div className='w-full ml-18 overflow-y-auto'>
         <ButtonContainer />
         <VideoContainer />
-        {/* <VideoShimmer /> */}
     </div>
   )
-}
+} 
 
 export default MainBody

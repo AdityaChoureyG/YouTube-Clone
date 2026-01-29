@@ -1,12 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { YOUTUBE_API_URL, Search_API_URL } from '../constants';
-import VideoShimmer from './VideoShimmer';
+import { YOUTUBE_VIDEOS_API, YOUTUBE_API_KEYY } from '../constants';
+import VideoShimmer , { ShortVideoShimmer } from './VideoShimmer';
 import calculateTimeStamp from '../utils/timestamp';
 import calculateViewCount from '../utils/calculareViewCount'
 import calculatePublishedDate from '../utils/calculatePublishedDate'
+import { useInView } from 'react-intersection-observer';
 
 
 const VideoItem = ({item}) => {
+    const [channelIcon, setChannelIcon] = useState("");
+
+    async function getProfile() {
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${item?.snippet?.channelId}&key=${YOUTUBE_API_KEYY}`);
+        const data = await response.json();
+        setChannelIcon(data.items[0].snippet.thumbnails.default.url);
+    }
+
+    // useEffect(() => {
+    //     getProfile();
+    // }, [item?.snippet?.channelId]);
+
     return (
         <div className="w-full sm:w-1/2 lg:w-1/3 p-2">
             <div className="flex flex-col gap-2 cursor-pointer transition-all duration-300 hover:bg-gray-100 p-2 rounded-xl group">
@@ -28,8 +41,8 @@ const VideoItem = ({item}) => {
                 <div className="flex gap-3 pt-1">
                 {/* Channel Icon */}
                     <div className="shrink-0">
-                        <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 overflow-hidden">
-                        <img src="https://i.pravatar.cc/150?u=channel" alt="avatar" />
+                        <div className="w-9 h-9 rounded-full bg-gray-200 overflow-hidden">
+                        <img src={null} alt="avatar" />
                         </div>
                     </div>
 
@@ -56,34 +69,54 @@ const VideoItem = ({item}) => {
 
 const VideoContainer = () => {
     const [Videos, setVideos] = React.useState([]);
+    const [nextPageToken, setNextPageToken] = React.useState("");
+    const [ref, inView] = useInView({
+        threshold : 0
+    });
 
-    useEffect(()=>{
-        getVideos();
-        getSearchResult();
-    }, []);
+    useEffect(() => {
+        async function fetchVideos() {
+            const response = await fetch(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=15&pageToken=${nextPageToken}&regionCode=IN&key=${YOUTUBE_API_KEYY}`);
+            const data = await response.json();
+            console.log(data);
+            setNextPageToken(data?.nextPageToken);
+            setVideos((prev) => {
+                const existingIds = new Set(prev.map(i => i.id?.videoId || i.id));
+                const incoming = data?.items || [];
+                const newItems = incoming.filter(i => {
+                    const id = i.id?.videoId || i.id;
+                    return !existingIds.has(id);
+                });
+                return [...prev, ...newItems];
+            });
+        }
 
-    async function getSearchResult(){
-        const response = await fetch(Search_API_URL);
-        const data = await response.json();
-        console.log("Search Result:", data.items);
-    }
-
-    async function getVideos(){
-        const response = await fetch(YOUTUBE_API_URL);
-        const data = await response.json();
-        console.log(data.items);
-        setVideos(data.items);
-    }
+        if (Videos.length === 0 || (inView && nextPageToken)) {
+            fetchVideos();
+        }
+    }, [inView]);
 
     return (Videos.length == 0) ? (<VideoShimmer />) : (
         <>
-            <div className='px-5 flex flex-wrap justify-center'>
-            {
-                Videos.map((item) => {
-                    return <VideoItem  key={item.id} item={item}/>
-                })
-            }
-           </div>
+                <div className='px-1 flex flex-wrap justify-center'>
+                    {
+                        Videos.map((item) => {
+                            const key = item.id?.videoId || item.id;
+                            return <VideoItem key={key} item={item}/>
+                        })
+                    }
+                </div>
+
+                {/* The Sentinel: When this div enters view, more videos load */}
+                <div ref={ref}  className="w-full flex flex-col flex-wrap justify-center items-center">
+                    {nextPageToken ? (
+                    <>
+                        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-red-600"></div>
+                    </>
+                    ) : (
+                    <p>No more videos to load!</p>
+                    )}
+                </div>
         </>
     )
 }
