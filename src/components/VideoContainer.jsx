@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { YOUTUBE_VIDEOS_API, YOUTUBE_API_KEYY } from '../constants';
-import VideoShimmer , { ShortVideoShimmer } from './VideoShimmer';
+import VideoShimmer  from './VideoShimmer';
 import calculateTimeStamp from '../utils/timestamp';
 import calculateViewCount from '../utils/calculareViewCount'
 import calculatePublishedDate from '../utils/calculatePublishedDate'

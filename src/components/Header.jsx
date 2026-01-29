@@ -47,7 +47,7 @@ const HeaderMiddle = () => {
     console.log("Searching for ", searchQuery);
     // setShowSuggestion(false);
     inputRef.current.blur();
-    navigation(`/search?value=${searchQuery}`);
+    navigation(`/result?search_query=${searchQuery}`);
   }
 
   useEffect(() => {

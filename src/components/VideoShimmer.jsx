@@ -44,16 +44,4 @@ const VideoShimmer = () => {
   )
 }
 
-export const ShortVideoShimmer = () => {
-    return (
-        <div className='px-5 flex flex-wrap justify-center'>
-            <VideoItem />
-            <VideoItem />
-            <VideoItem />
-        </div>
-    )
-}
-
-
-
 export default VideoShimmer

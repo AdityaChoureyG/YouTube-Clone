@@ -26,7 +26,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<AppLayout />}>
           <Route path="/" element={<Body />} />
-          <Route path="/search" element={<SearchBody />} />
+          <Route path="/result" element={<SearchBody />} />
           <Route path="/watch/:videoId" element={<Body />} />
           <Route path="/feed/subscriptions" element={<Body />} />
           <Route path="/account" element={<Body />} />

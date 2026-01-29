@@ -3,7 +3,7 @@ import VideoShimmer from "./VideoShimmer";
 
 const buttonItems = ['All', 'Music', 'Data Structure', 'Mixes', 'Live', 'System Design', 'Software Engineering', 'Masala films', 'Ghazal', 'News', 'Recently uploaded', 'Media', "Movies", "Cricket", "Tech", "Cooking", "React", "Tailwind"];
 
-const ButtonItem = ({label}) => {
+export const ButtonItem = ({label}) => {
     return (
         <div className='bg-gray-200 rounded-xl whitespace-nowrap '>
             <button className='px-3 py-1 text-black font-medium cursor-pointer'>{label}</button>
