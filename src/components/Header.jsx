@@ -116,11 +116,6 @@ const HeaderMiddle = () => {
 };
 
 const HeaderRightSide = () => {
-  async function getProfile() {
-    const response = await fetch('https://www.googleapis.com/youtube/v3/channels?part=snippet&id=UC-EhqSaHek9GeL_wKeNIWbA&key=AIzaSyDQZlnjNZo0IBEnCOwwSlfXRGA8-6ouQRA');
-    const data = await response.json();
-    console.log(data);
-  }
   return (
     <div className='flex w-25 mx-2 justify-between items-center  shrink-0'>
       <button className='cursor-pointer p-1.5 rounded-full hover:bg-gray-200'>
@@ -128,7 +123,6 @@ const HeaderRightSide = () => {
       </button>
 
       <button className='cursor-pointer'
-        onClick={() => getProfile()}
       >
         <img className='w-8 h-8 ' src={userIcon} alt="user" />
       </button>
