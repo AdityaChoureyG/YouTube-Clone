@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { Outlet, BrowserRouter, Routes, Route } from "react-router-dom";
 import SidebarBody from "./components/SidebarBody";
 import SearchBody from "./components/SearchBody";
+import WatchPage from "./components/WatchPage";
 
 const AppLayout = () => { 
   return (
@@ -27,7 +28,7 @@ const App = () => {
         <Route path="/" element={<AppLayout />}>
           <Route path="/" element={<Body />} />
           <Route path="/result" element={<SearchBody />} />
-          <Route path="/watch/:videoId" element={<Body />} />
+          <Route path="/watch" element={<WatchPage />} />
           <Route path="/feed/subscriptions" element={<Body />} />
           <Route path="/account" element={<Body />} />
         </Route>

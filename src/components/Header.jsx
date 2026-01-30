@@ -41,6 +41,7 @@ const HeaderMiddle = () => {
   const [showSuggestion, setShowSuggestion] = React.useState(false);
   const navigation = useNavigate();
   const inputRef = useRef(null);
+  const containerRef = useRef(null);
 
   const handleSearch = (e) => {
     if(searchQuery.trim() === "") return;
@@ -60,6 +61,17 @@ const HeaderMiddle = () => {
     }
   }, [searchQuery]);
 
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setShowSuggestion(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   async function getSearchSuggestion() {
     const response = await fetch(YOUTUBE_SEARCH_API + searchQuery);
     const data = await response.json();
@@ -76,11 +88,11 @@ const HeaderMiddle = () => {
             type="text"
             ref={inputRef}
             placeholder="Search"
-            className="w-full font-normal h-7 bg-transparent outline-none text-black placeholder-gray-500 text-sm md:text-base"
+            className="w-full font-normal h-7 bg-transparent outline-none px-3 text-black placeholder-gray-500 text-md "
             value={searchQuery}
             onChange={(e)=> setSearchQuery(e.target.value)}
             onFocus={() => setShowSuggestion(true)}
-            onBlur={() => setShowSuggestion(false)}
+            onBlur={() => setTimeout(() => setShowSuggestion(false), 300)}
             onKeyDown={(e) => {
                 if(e.key === "Enter")  handleSearch();
               }
@@ -99,13 +111,16 @@ const HeaderMiddle = () => {
       {/* search suggestion */}
       {
         (showSuggestion) && (suggestionResult.length != 0) &&
-        <ul className='suggestion-container absolute top-10 left-0 right-0 mx-2 p-2 mt-2 border border-gray-300 bg-white rounded-2xl shadow-2xl max-w-full md:max-w-600 z-50 max-h-96 overflow-y-auto'>
+            <ul className='suggestion-container absolute top-10 left-0 right-0 mx-2 p-2 mt-2 border border-gray-300 bg-white rounded-2xl shadow-2xl max-w-full md:max-w-600 z-50 max-h-96 overflow-y-auto'>
           {
             suggestionResult.map((item, idx) => {
-              return <li key={idx} className='flex items-center px-4 py-3 hover:bg-gray-100 cursor-pointer transition-colors duration-150 rounded-lg'>
-                <img className='w-4 h-4 mr-3 text-gray-500' src={searchIcon} alt="search" />
-                <span className='font-medium text-black text-sm md:text-base line-clamp-2'>{item}</span>
-              </li>
+                  return <Link to={`/result?search_query=${item}`}  key={idx} onClick={() => { setShowSuggestion(false); inputRef.current?.blur(); }}>
+                <li className='flex items-center px-4 py-3 hover:bg-gray-100 cursor-pointer transition-colors duration-150 rounded-lg'>
+                  <img className='w-4 h-4 mr-3 text-gray-500' src={searchIcon} alt="search" />
+                  <span className='font-medium text-black text-sm md:text-base line-clamp-2'>{item}</span>
+                </li>
+              </Link>
+               
             })
           }
         </ul>

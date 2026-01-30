@@ -1,4 +1,4 @@
-const formatViewsCustom = (views) => {
+const calculateViewCount = (views) => {
   if (views >= 1000000000) {
     return (views / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
   }
@@ -11,4 +11,4 @@ const formatViewsCustom = (views) => {
   return views.toString();
 };
 
-export default formatViewsCustom;
+export default calculateViewCount;

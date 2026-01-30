@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { YOUTUBE_VIDEOS_API, YOUTUBE_API_KEYY } from '../constants';
 import VideoShimmer  from './VideoShimmer';
 import calculateTimeStamp from '../utils/timestamp';
-import calculateViewCount from '../utils/calculareViewCount'
+import calculateViewCount from '../utils/calculateViewCount'
 import calculatePublishedDate from '../utils/calculatePublishedDate'
 import { useInView } from 'react-intersection-observer';
+import { Link } from 'react-router-dom';
 
 
 const VideoItem = ({item}) => {
@@ -21,9 +22,7 @@ const VideoItem = ({item}) => {
     // }, [item?.snippet?.channelId]);
 
     return (
-        <div className="w-full sm:w-1/2 lg:w-1/3 p-2">
-            <div className="flex flex-col gap-2 cursor-pointer transition-all duration-300 hover:bg-gray-100 p-2 rounded-xl group">
-                
+        <div className="flex flex-col gap-2 cursor-pointer transition-all duration-300 hover:bg-gray-100 p-2 rounded-xl group h-full">
                 {/* 1. THUMBNAIL CONTAINER */}
                 <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-gray-200">
                     <img 
@@ -62,7 +61,6 @@ const VideoItem = ({item}) => {
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     )
 }
@@ -102,7 +100,11 @@ const VideoContainer = () => {
                     {
                         Videos.map((item) => {
                             const key = item.id?.videoId || item.id;
-                            return <VideoItem key={key} item={item}/>
+                            return (
+                                <Link to={`/watch?v=${key}`} key={key} className="w-full sm:w-1/2 lg:w-1/3 p-2 block h-full">
+                                    <VideoItem item={item} />
+                                </Link>
+                            )
                         })
                     }
                 </div>
