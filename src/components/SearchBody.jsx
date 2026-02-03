@@ -103,6 +103,8 @@ const SearchVideoContainer = () => {
             return [...prev, ...newItems];
         });
         setNextPageToken(data?.nextPageToken);
+        // mark initial load as finished after results arrive
+        setIsInitialLoad(false);
     }
 
     // Initial load on query change
@@ -116,7 +118,6 @@ const SearchVideoContainer = () => {
     useEffect(() => {
         if (isInitialLoad && query) {
             getSearchResult();
-            setIsInitialLoad(false);
         }
     }, [isInitialLoad, inView, query]);
 
@@ -127,7 +128,17 @@ const SearchVideoContainer = () => {
         }
     }, [inView, isInitialLoad, query]);
 
-    return (!searchResult) ? (<SearchVideoShimmer />) : (
+    if (isInitialLoad) return (<SearchVideoShimmer />);
+
+    if (!isInitialLoad && searchResult.length === 0) {
+        return (
+            <div className='px-4'>
+                <div className='text-gray-600 py-8'>No results found for "{query}"</div>
+            </div>
+        )
+    }
+
+    return (
         <>
             <div className='px-4'>
                 {
@@ -142,13 +153,10 @@ const SearchVideoContainer = () => {
 
             {/* the sentinel : marker */}
             <div ref={ref}  className="w-full flex  flex-col flex-wrap justify-center items-center">
-                {nextPageToken ? (
+                
                 <>
                     <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-red-600"></div>
                 </>
-                ) : (
-                <p>No more videos to load!</p>
-                )}
             </div>
         </>
     )
@@ -157,7 +165,7 @@ const SearchVideoContainer = () => {
 const SearchBody = () => {
 
   return (
-    <div className='w-full h-full bg-white ml-20 overflow-auto'>
+    <div className='w-full h-full bg-white sm:ml-20 overflow-auto'>
         <ButtonContainer />
         <SearchVideoContainer />
     </div>

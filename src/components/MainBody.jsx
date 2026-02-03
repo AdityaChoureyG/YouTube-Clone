@@ -25,7 +25,7 @@ const ButtonContainer = () => {
 
 const MainBody = () => {
   return (
-    <div className='w-full ml-18 overflow-y-auto'>
+    <div className='w-full sm:ml-18 overflow-y-auto'>
         <ButtonContainer />
         <VideoContainer />
     </div>

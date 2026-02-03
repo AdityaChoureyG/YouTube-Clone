@@ -22,9 +22,6 @@ const SidebarMenu = () => {
     const dispatch = useDispatch();
     const isMenuOpen = useSelector(state => state.nav.isMenuOpen);
 
-    function handleToggle(){
-        dispatch(toggleMenu());
-    }
     return (
         <>
             <div 

@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const navSlice = createSlice({
     name : 'nav',
     initialState : {
-        isMenuOpen : false
+        isMenuOpen : false,
+        isBodyMenuOpen : true,
     },
     reducers : {
         toggleMenu : (state) => {
@@ -12,9 +13,13 @@ const navSlice = createSlice({
         
         closeMenu : (state) => {
             state.isMenuOpen = false;
+        },
+
+        toggleBodyMenu : (state) => {
+            state.isBodyMenuOpen = !state.isBodyMenuOpen;
         }
     }
 })
 
-export const {toggleMenu, closeMenu} = navSlice.actions;
+export const {toggleMenu, closeMenu, toggleBodyMenu} = navSlice.actions;
 export default navSlice.reducer;

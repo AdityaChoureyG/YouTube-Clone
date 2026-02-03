@@ -4,6 +4,7 @@
  import subscriptionIcon from '../assets/subscription.png'
  import exploreIcon from '../assets/compass.png'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 
  const MenuItem = ({ icon, label }) => (
@@ -14,8 +15,11 @@ import { Link } from 'react-router-dom'
  );
 
  const SidebarBody = () => {
+
+  const isBodyMenuOpen = useSelector(state => state.nav.isBodyMenuOpen);
+
    return (
-     <div className='fixed left-0 top-16 w-20 px-1 h-[calc(100vh-64px)] bg-white z-20 '>
+     <div className={`hidden ${isBodyMenuOpen ? 'sm:block' : ''} fixed left-0 top-16 w-20 px-1 h-[calc(100vh-64px)] bg-white z-20 `}>
         <Link to={'/'}><MenuItem icon={homeIcon} label="Home" /></Link>
         <MenuItem icon={exploreIcon} label="Explore" />
         <MenuItem icon={subscriptionIcon} label="Subscriptions" />
