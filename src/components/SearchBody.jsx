@@ -57,7 +57,7 @@ const VideoItem = ({item}) => {
 
                     <div className='mt-3 flex items-center gap-3 text-xs md:text-sm text-gray-600'>
                         <div className='flex items-center gap-3'>
-                            <div className='w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex-shrink-0'>
+                            <div className='w-8 h-8 rounded-full overflow-hidden bg-gray-200 shrink-0'>
                                 <img src={item?.channelAvatar || 'https://picsum.photos/seed/picsum/200/200'} alt={item?.channel} className='w-full h-full object-cover' />
                             </div>
 

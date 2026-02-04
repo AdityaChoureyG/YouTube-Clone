@@ -47,7 +47,7 @@ const VideoItem = ({item}) => {
 
                     {/* Text Content */}
                     <div className="flex flex-col">
-                        <h3 className="font-bold text-md font-semibold text-gray-900 leading-tight line-clamp-2">
+                        <h3 className="font-bold text-md text-gray-900 leading-tight line-clamp-2">
                             {item.snippet.title}
                         </h3>
                         
