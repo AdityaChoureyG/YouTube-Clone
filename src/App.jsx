@@ -6,6 +6,7 @@ import { Outlet, BrowserRouter, Routes, Route } from "react-router-dom";
 import SidebarBody from "./components/SidebarBody";
 import SearchBody from "./components/SearchBody";
 import WatchPage from "./components/WatchPage";
+import Temp from "./components/Temp";
 
 const AppLayout = () => { 
   return (
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/watch" element={<WatchPage />} />
           <Route path="/feed/subscriptions" element={<Body />} />
           <Route path="/account" element={<Body />} />
+          <Route path="/temp" element={<Temp />} />
         </Route>
       </Routes>
     </BrowserRouter>

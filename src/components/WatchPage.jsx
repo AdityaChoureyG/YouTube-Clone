@@ -7,6 +7,7 @@ import calculateViewCount from "../utils/calculateViewCount";
 import calculatePublishedDate from "../utils/calculatePublishedDate";
 import { Link } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
+import LiveChat from "./LiveChat";
 
 const WatchPage = () => {
   const [searchParams] = useSearchParams();
@@ -83,8 +84,8 @@ const WatchPage = () => {
       if (videoDetails?.snippet?.title) {
         try {
           const url = nextPageTokenRelated
-            ? `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&pageToken=${nextPageTokenRelated}&q=${videoDetails.snippet.title}&type=video&key=${YOUTUBE_API_KEYY}`
-            : `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${videoDetails.snippet.title}&type=video&key=${YOUTUBE_API_KEYY}`;
+            ? `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&pageToken=${nextPageTokenRelated}&channelId=${videoDetails.snippet.channelId}&type=video&key=${YOUTUBE_API_KEYY}`
+            : `https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&channelId=${videoDetails.snippet.channelId}&maxResults=10&key=${YOUTUBE_API_KEYY}`;
           
           const response = await fetch(url);
           const data = await response.json();
@@ -161,7 +162,7 @@ const WatchPage = () => {
 
               {/* Channel Info */}
               <div className="flex-1">
-                <h3 className="font-bold text-gray-900">
+                <h3 className="font-bold text-gray-900 line-clamp-1">
                   {videoDetails?.snippet?.channelTitle}
                 </h3>
                 <p className="text-sm text-gray-600">
@@ -321,6 +322,8 @@ const WatchPage = () => {
 
         {/* Sidebar: Related Videos */}
         <div className="lg:col-span-1">
+          <LiveChat />
+
           <h2 className="text-lg font-bold text-gray-900 mb-4">
             Recommended
           </h2>
