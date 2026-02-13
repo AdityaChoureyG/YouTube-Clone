@@ -5,6 +5,7 @@ const navSlice = createSlice({
     initialState : {
         isMenuOpen : false,
         isBodyMenuOpen : true,
+        isSearchOpen : false,
     },
     reducers : {
         toggleMenu : (state) => {
@@ -17,9 +18,17 @@ const navSlice = createSlice({
 
         toggleBodyMenu : (state) => {
             state.isBodyMenuOpen = !state.isBodyMenuOpen;
+        },
+
+        openSearchBox : (state) => {
+            state.isSearchOpen = true;
+        },
+
+        closeSearchBox : (state) => {
+            state.isSearchOpen = false;
         }
     }
 })
 
-export const {toggleMenu, closeMenu, toggleBodyMenu} = navSlice.actions;
+export const {toggleMenu, closeMenu, toggleBodyMenu, openSearchBox, closeSearchBox} = navSlice.actions;
 export default navSlice.reducer;
