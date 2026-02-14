@@ -69,7 +69,7 @@ const VideoContainer = () => {
     const [Videos, setVideos] = React.useState([]);
     const [nextPageToken, setNextPageToken] = React.useState("");
     const [ref, inView] = useInView({
-        threshold : 0
+        threshold : 0.2
     });
 
     useEffect(() => {
@@ -110,10 +110,10 @@ const VideoContainer = () => {
                 </div>
 
                 {/* The Sentinel: When this div enters view, more videos load */}
-                <div ref={ref}  className="w-full flex flex-col flex-wrap justify-center items-center">
+                <div ref={ref} className="w-full h-25 flex flex-col flex-wrap justify-center items-center">
                     {nextPageToken ? (
                     <>
-                        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-red-600"></div>
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-red-600"></div>
                     </>
                     ) : (
                     <p>No more videos to load!</p>
