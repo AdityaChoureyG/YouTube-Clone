@@ -23,7 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-src/constants.js
 
 .env
 .env.local

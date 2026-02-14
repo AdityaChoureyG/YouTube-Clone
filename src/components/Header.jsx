@@ -9,7 +9,7 @@ import closeIcon from '../assets/close.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { openSearchBox, toggleMenu, closeSearchBox } from '../utils/navslice'
 import SidebarMenu from './SidebarMenu'
-import { YOUTUBE_SEARCH_API } from '../constants'
+import { YOUTUBE_SEARCH_API } from '../constants.js'
 import { Link, useNavigate } from 'react-router-dom'
 
 export const HeaderLeftSide = () => {
